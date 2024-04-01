@@ -1,0 +1,33 @@
+version: "3"
+services:
+  pytorch:
+    shm_size: "10gb"
+    build:
+      context: ./docker
+      args:
+        - http_proxy
+        - https_proxy
+        - HTTP_PROXY
+        - HTTPS_PROXY
+    tty: true
+    ports:
+      - "10169:8888"
+    environment:
+      - http_proxy
+      - https_proxy
+      - HTTP_PROXY
+      - HTTPS_PROXY
+      - PYTHONPATH=/workspace/python
+    volumes:
+      - /data1/yuki_yasuda/workspace_lab/micrometeorology-sr-simulation-2023-yasuda/data:/workspace/data:ro
+      - ./python:/workspace/python:cached
+      - ./reports:/workspace/reports:cached
+    command:
+      jupyter lab --ip=0.0.0.0 --allow-root --no-browser --NotebookApp.token=''
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

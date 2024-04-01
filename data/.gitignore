@@ -1,0 +1,8 @@
+*.npy
+*.npz
+*.txt
+*.csv
+*.pth
+*.pickle
+*.log
+tmp

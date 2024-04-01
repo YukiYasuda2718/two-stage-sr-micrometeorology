@@ -1,0 +1,62 @@
+data:
+  batch_size: 32
+  biases:
+  - 301.0
+  - -10.7
+  - -17.5
+  - -8.2
+  clipping_max: 1.0
+  clipping_min: 0.0
+  dataset_name: DatasetLrTUVW
+  discarded_minute_range:
+  - 1
+  - 30
+  dl_data_name: v02
+  ground_truth_name: lr_tokyo_05m
+  input_name: lr_tokyo_20m_vz_no_s2srad
+  missing_value: 0.0
+  num_channels: 4
+  sampling_interval_minutes: 0
+  scales:
+  - 11.3
+  - 24.4
+  - 37.3
+  - 16.7
+  train_valid_test_ratios:
+  - 0.7
+  - 0.15
+  - 0.15
+  use_clipping_ground_truth: true
+  use_clipping_input: true
+loss:
+  delta_meter: 20.0
+  name: DivergenceGradientL2Loss
+  scales:
+  - 24.4
+  - 37.3
+  - 16.7
+  weight_divergence_loss: 0.0
+  weight_gradient_loss: 1.0
+model:
+  bias: true
+  dropout: 0.1
+  in_channels: 4
+  interpolation_mode: nearest-exact
+  lr_size:
+  - 10
+  - 80
+  - 80
+  n_layers_in_block: 3
+  name: UNetLr
+  num_feat0: 64
+  num_feat1: 128
+  num_feat2: 256
+  num_feat3: 512
+  num_latent_blocks: 6
+  out_channels: 4
+train:
+  early_stopping_patience: 50
+  epochs: 5000
+  lr: 0.0002
+  seed: 25795
+  use_zero: true

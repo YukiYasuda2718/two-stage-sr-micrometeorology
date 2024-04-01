@@ -1,0 +1,55 @@
+Bootstrap: docker
+From: nvidia/cuda:11.3.1-cudnn8-devel-ubuntu20.04
+
+%files
+    ./docker/Pipfile /workspace/
+    ./docker/Pipfile.lock /workspace/
+
+%environment
+    export PATH=/workspace/.local/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
+    export PIP_NO_CACHE_DIR="off"
+    export WORKON_HOME=/workspace/.venvs
+    export PIPENV_VENV_IN_PROJECT=1
+
+%post
+    export DEBIAN_FRONTEND="noninteractive"
+    export PATH=/workspace/.local/bin:$PATH
+    export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
+    export PIP_NO_CACHE_DIR="off"
+    export WORKON_HOME=/workspace/.venvs
+    export PIPENV_VENV_IN_PROJECT=1
+
+
+    set -eux
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        zsh \
+        less \
+        git \
+        wget \
+        curl \
+        ttf-mscorefonts-installer \
+        libeccodes-dev \
+        libgeos-dev \
+        libgdal-dev \
+        build-essential \
+        python3.9 \
+        python3.9-dev \
+        python3-pip
+    apt-get autoremove -y
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+
+    cd /workspace
+    rm -rf ${HOME}/.cache/pip ${HOME}/.cache/pipenv
+    pip3 freeze > uninstall.txt
+    pip3 uninstall -y -r uninstall.txt
+    pip3 install -U pip==23.0.1 pipenv==2023.2.18
+    cp /usr/lib/python3/dist-packages/apt_pkg.cpython-38-x86_64-linux-gnu.so /usr/lib/python3/dist-packages/apt_pkg.so
+    apt-get purge -y python3-yaml
+    pipenv sync --system --dev
+    rm -rf ${HOME}/.cache/pip ${HOME}/.cache/pipenv

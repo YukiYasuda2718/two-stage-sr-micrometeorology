@@ -1,0 +1,11 @@
+{
+    "defaultSeverity": "Warning",
+    "ignoreCodes": [
+        "E501",
+        "E402",
+        "E203",
+        "W391"
+    ],
+    "ignoreMessagesPatterns": [],
+    "disable": false
+}

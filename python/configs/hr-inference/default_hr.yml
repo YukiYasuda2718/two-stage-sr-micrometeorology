@@ -1,0 +1,76 @@
+data:
+  batch_size: 32
+  biases:
+  - 301.0
+  - -10.7
+  - -17.5
+  - -8.5
+  clipping_max: 1.0
+  clipping_min: 0.0
+  dataset_name: DatasetTUVWUsingLrInference
+  discarded_minute_range:
+  - 1
+  - 30
+  dl_data_name: v02
+  hr_cropped_size:
+  - 40
+  - 64
+  - 64
+  hr_image_size:
+  - 40
+  - 320
+  - 320
+  hr_name: hr_tokyo_05m
+  lr_config_name: default_lr
+  lr_experiment_name: lr-inference
+  lr_name: lr_tokyo_20m_vz_no_s2srad
+  missing_value: 0.0
+  num_channels: 4
+  scale_factor: 4
+  scales:
+  - 11.3
+  - 24.4
+  - 37.3
+  - 17.5
+  train_valid_test_ratios:
+  - 0.7
+  - 0.15
+  - 0.15
+  use_hr_clipping: true
+  use_lr_clipping: true
+  use_lr_inference: true
+  use_lr_input: false
+loss:
+  delta_meter: 5.0
+  name: DivergenceGradientL2Loss
+  scales:
+  - 24.4
+  - 37.3
+  - 17.5
+  weight_divergence_loss: 10.0
+  weight_gradient_loss: 1.0
+model:
+  activation_type_down: ReLU
+  activation_type_latent: LeakyReLU
+  activation_type_up: LeakyReLU
+  bias: true
+  dropout: 0.0
+  in_channels: 4
+  interpolation_mode: nearest-exact
+  lst_n_feats:
+  - 64
+  - 128
+  - 128
+  - 256
+  - 256
+  n_layers_in_block: 2
+  name: UNetHr
+  num_latent_layers: 2
+  out_channels: 4
+  scale_factor: 4
+train:
+  early_stopping_patience: 50
+  epochs: 5000
+  lr: 0.0003
+  seed: 16265
+  use_zero: true
